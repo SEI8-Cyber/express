@@ -1,14 +1,17 @@
 var express = require('express');
 var router = express.Router();
-const request = require('request');
 
-router.get('/', async (req, res) => {
-  request('https://api.thecatapi.com/v1/images/search', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      const data = JSON.parse(body);
-      res.json(data);
+router.get('/', function(req, res, next) {
+  const text = 'Hello World';
+  const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(text);
+
+  res.json([
+    {
+      service: "QR Code Generator",
+      text: text,
+      url: qrUrl
     }
-  });
+  ]);
 });
 
 module.exports = router;
